@@ -6,18 +6,15 @@ from scipy.sparse import csr_matrix
 from typing import List, Dict, Any, Tuple, Set
 from collections import defaultdict
 
-# --- Importing custom modules for the solver ---
 from solver.problem import MIPProblem
 from solver.utilities import setup_logger
 
-# --- Setup the logger ---
-# Creates a logger object to print progress and debug information for the cut generation.
 logger = setup_logger()
 
 
 def _generate_knapsack_cover_cuts(problem: MIPProblem, lp_solution: Dict[str, float]) -> List[Dict[str, Any]]:
     """
-    Generates knapsack cover cuts for suitable constraints. 🎒
+    Generates knapsack cover cuts for suitable constraints.
 
     A knapsack constraint has the form `Σ(a_i * x_i) <= b`, where all `x_i` are binary
     and all `a_i` are positive. A "cover" is a subset of variables `C` whose
@@ -95,7 +92,7 @@ def _generate_knapsack_cover_cuts(problem: MIPProblem, lp_solution: Dict[str, fl
 
 def _generate_clique_cuts(problem: MIPProblem, lp_solution: Dict[str, float]) -> List[Dict[str, Any]]:
     """
-    Generates clique cuts from a conflict graph. 🤝
+    Generates clique cuts from a conflict graph.
 
     A conflict graph connects pairs of binary variables that cannot both be 1. Such a
     conflict is often represented by a constraint like `x_i + x_j <= 1`. A "clique"
@@ -171,11 +168,11 @@ def _generate_clique_cuts(problem: MIPProblem, lp_solution: Dict[str, float]) ->
     return new_cuts
 
 
-def generate_gmi_cuts(solved_model: gp.Model, 
-                      lp_result: Dict[str, Any], 
+def generate_gmi_cuts(solved_model: gp.Model,
+                      lp_result: Dict[str, Any],
                       problem: MIPProblem) -> List[Dict[str, Any]]:
     """
-    Generates Gomory Mixed-Integer (GMI) cuts from the simplex tableau. 📐
+    Generates Gomory Mixed-Integer (GMI) cuts from the simplex tableau.
 
     GMI cuts are general-purpose cuts derived directly from the final simplex tableau
     of an LP relaxation. The process involves:
@@ -305,10 +302,10 @@ def generate_gmi_cuts(solved_model: gp.Model,
 
 def generate_all_cuts(problem: MIPProblem,
                       lp_result: Dict[str, Any],
-                      active_cuts: List[Dict[str, Any]] = [],
-                      local_constraints: List[Tuple[str, str, float]] = []) -> List[Dict[str, Any]]:
+                      active_cuts: List[Dict[str, Any]] = None,
+                      local_constraints: List[Tuple[str, str, float]] = None) -> List[Dict[str, Any]]:
     """
-    Orchestrates the generation of all implemented cut types. 🔪
+    Orchestrates the generation of all implemented cut types.
 
     This master function calls each individual cut generator and collects all new,
     violated cuts into a single list.
@@ -316,12 +313,14 @@ def generate_all_cuts(problem: MIPProblem,
     Args:
         problem (MIPProblem): The main MIP problem instance.
         lp_result (Dict[str, Any]): The full result dictionary from the LP solve.
-        active_cuts (List[Dict[str, Any]]): List of cuts already applied to this node. (unused in this version)
-        local_constraints (List[Tuple[str, str, float]]): Local B&B constraints. (unused in this version)
+        active_cuts (List[Dict[str, Any]]): Reserved for future cut filtering.
+        local_constraints (List[Tuple[str, str, float]]): Reserved for future constraint-aware cuts.
 
     Returns:
         List[Dict[str, Any]]: A list of all newly generated cuts.
     """
+    # Default mutable arguments handled properly
+    _ = active_cuts, local_constraints  # Reserved for future extensions
     logger.debug("--- Starting Cut Generation ---")
     all_new_cuts: List[Dict[str, Any]] = []
     lp_solution: Optional[Dict[str, float]] = lp_result.get('solution')
