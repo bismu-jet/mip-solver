@@ -2,12 +2,9 @@ import gurobipy as gp
 from gurobipy import GRB
 from typing import List, Dict, Tuple, Any, Optional
 
-# --- Importing custom modules for the solver ---
-from solver.problem import MIPProblem # To load and manage the MIP problem data.
-from solver.utilities import setup_logger # Utility for logging solver progress.
+from solver.problem import MIPProblem
+from solver.utilities import setup_logger
 
-# --- Setup the logger ---
-# Creates a logger object to print progress and debug information for Gurobi interactions.
 logger = setup_logger()
 
 def solve_lp_relaxation(problem: MIPProblem, 

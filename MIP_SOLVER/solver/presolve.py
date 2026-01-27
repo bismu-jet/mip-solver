@@ -1,14 +1,11 @@
 import gurobipy as gp
 import math
 from gurobipy import GRB
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 
-# --- Importing custom modules for the solver ---
-from solver.problem import MIPProblem # To load and manage the MIP problem data.
-from solver.utilities import setup_logger # Utility for logging solver progress.
+from solver.problem import MIPProblem
+from solver.utilities import setup_logger
 
-# --- Setup the logger ---
-# Creates a logger object to print progress and debug information for the presolve phase.
 logger = setup_logger()
 
 
@@ -396,7 +393,7 @@ def probe_binary_variables(problem: MIPProblem, config: Dict[str, Any]) -> None:
     vars_to_fix_to_0: List[str] = []
     vars_to_fix_to_1: List[str] = []
 
-    probe_model: gp.Model = None
+    probe_model: Optional[gp.Model] = None
     try:
         # Create a copy of the model for probing to avoid modifying the original.
         probe_model = model.copy()

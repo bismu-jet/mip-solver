@@ -3,13 +3,10 @@ from gurobipy import GRB
 import math
 from typing import List, Dict, Optional, Tuple, Any
 
-# --- Importing custom modules for the solver ---
 from solver.problem import MIPProblem
 from solver.gurobi_interface import solve_lp_relaxation, solve_lp_with_custom_objective, solve_sub_mip
 from solver.utilities import setup_logger
 
-# --- Setup the logger ---
-# Creates a logger object to print progress and debug information for the heuristics.
 logger = setup_logger()
 
 
@@ -18,7 +15,7 @@ def _rins_heuristic(problem: MIPProblem,
                     current_lp_solution: Dict[str, float],
                     time_limit: float = 5.0) -> Optional[Dict[str, Any]]:
     """
-    Implements the Relaxation Induced Neighborhood Search (RINS) Heuristic. 🔎
+    Implements the Relaxation Induced Neighborhood Search (RINS) Heuristic.
 
     RINS explores the neighborhood of the current best integer solution (the incumbent).
     The key idea is that if an integer variable has the same value in both the incumbent
@@ -73,7 +70,7 @@ def _diving_heuristic(problem: MIPProblem,
                       initial_lp_solution: Dict[str, float],
                       initial_constraints: List[Tuple[str, str, float]]) -> Optional[Dict[str, float]]:
     """
-    Tries to find an integer-feasible solution using a simple Diving Heuristic. 🏊
+    Tries to find an integer-feasible solution using a simple Diving Heuristic.
 
     This heuristic works by iteratively "diving" towards an integer solution. In each step,
     it identifies the fractional variable that is closest to an integer value, fixes it to
@@ -139,7 +136,7 @@ def _diving_heuristic(problem: MIPProblem,
 def _feasibility_pump(problem: MIPProblem,
                       initial_lp_solution: Dict[str, float]) -> Optional[Dict[str, float]]:
     """
-    Tries to find an integer-feasible solution using a Feasibility Pump heuristic. ⛽
+    Tries to find an integer-feasible solution using a Feasibility Pump heuristic.
 
     This heuristic iterates between two main steps:
     1. It takes the current LP solution (`x_lp`) and rounds it to the nearest
@@ -204,7 +201,7 @@ def _coefficient_diving(problem: MIPProblem,
                         initial_lp_solution: Dict[str, float],
                         initial_constraints: List[Tuple[str, str, float]]) -> Optional[Dict[str, float]]:
     """
-    Implements a Coefficient Diving Heuristic. 🤿
+    Implements a Coefficient Diving Heuristic.
 
     This is a smarter version of the standard diving heuristic. Instead of just picking
     the fractional variable closest to an integer, it prioritizes fixing variables that
@@ -296,11 +293,11 @@ def find_initial_solution(problem: MIPProblem,
 
 
 def run_periodic_heuristics(problem: MIPProblem,
-                              current_node_solution: Dict[str, float],
-                              incumbent_solution: Optional[Dict[str, float]],
-                              config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+                            current_node_solution: Dict[str, float],
+                            incumbent_solution: Optional[Dict[str, float]],
+                            config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
-    Master function for running periodic and improvement heuristics. 🛠️
+    Master function for running periodic and improvement heuristics.
 
     This function orchestrates heuristics that are called periodically during the main
     B&B search. Unlike primal heuristics, their goal is to take an existing good

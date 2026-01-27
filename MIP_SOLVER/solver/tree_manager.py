@@ -6,18 +6,14 @@ import gurobipy as gp
 from gurobipy import GRB
 from typing import List, Dict, Optional, Tuple, Any
 
-# --- Importing custom modules for the solver ---
-# These modules contain specific parts of the Branch and Bound algorithm.
-from solver.cuts import generate_all_cuts # For generating cutting planes.
-from solver.problem import MIPProblem # To load and manage the MIP problem data.
-from solver.node import Node # Represents a node in the Branch and Bound tree.
-from solver.gurobi_interface import solve_lp_relaxation # Solves the LP relaxation using Gurobi.
-from solver.heuristics import find_initial_solution, run_periodic_heuristics # For finding integer solutions.
-from solver.utilities import setup_logger # Utility for logging solver progress.
-from solver.presolve import presolve # For simplifying the problem before solving.
+from solver.cuts import generate_all_cuts
+from solver.problem import MIPProblem
+from solver.node import Node
+from solver.gurobi_interface import solve_lp_relaxation
+from solver.heuristics import find_initial_solution, run_periodic_heuristics
+from solver.utilities import setup_logger
+from solver.presolve import presolve
 
-# --- Setup the logger ---
-# Creates a logger object to print progress and debug information.
 logger = setup_logger()
 
 class TreeManager:
