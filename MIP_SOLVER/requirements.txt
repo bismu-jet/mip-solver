@@ -2,3 +2,4 @@ gurobipy
 pyyaml
 numpy
 scipy
+pytest
