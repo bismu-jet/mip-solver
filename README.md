@@ -1,6 +1,6 @@
 # MIP Solver - Branch and Bound Implementation
 
-[![Tests](https://github.com/bismu-jet/PI-final/actions/workflows/tests.yml/badge.svg)](https://github.com/bismu-jet/mip-solver/actions/workflows/tests.yml)
+[![Tests](https://github.com/bismu-jet/mip-solver/actions/workflows/tests.yml/badge.svg)](https://github.com/bismu-jet/mip-solver/actions/workflows/tests.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
